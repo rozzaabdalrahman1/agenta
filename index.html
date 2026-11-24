@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" dir="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.anthropic.com https://*.workers.dev https://*.vercel.app https://*.netlify.app http://localhost:* http://127.0.0.1:*; base-uri 'none'; form-action 'none'">
+<title>Claude Chat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <button id="newChat" class="primary">+ New chat</button>
+    <ul id="chatList"></ul>
+    <button id="openSettings">⚙ Settings</button>
+  </aside>
+  <main>
+    <header>
+      <button id="toggleSidebar" aria-label="Menu">☰</button>
+      <h1 id="chatTitle">Claude Chat</h1>
+      <select id="modelSelect" aria-label="Model"></select>
+    </header>
+    <div id="messages" aria-live="polite"></div>
+    <form id="composer">
+      <textarea id="input" rows="1" placeholder="Message Claude…  (Enter to send, Shift+Enter for new line)" dir="auto"></textarea>
+      <button id="send" class="primary" type="submit">Send</button>
+      <button id="stop" type="button" hidden>Stop</button>
+    </form>
+  </main>
+</div>
+
+<dialog id="settings">
+  <form method="dialog">
+    <h2>Settings</h2>
+    <label>Connection mode
+      <select id="mode">
+        <option value="byok">Bring your own key (stored in this browser only)</option>
+        <option value="proxy">Proxy (your own Cloudflare Worker, key stays on the server)</option>
+      </select>
+    </label>
+    <div id="byokBox">
+      <label>Anthropic API key
+        <input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-…">
+      </label>
+      <label class="row"><input id="remember" type="checkbox"> Remember the key on this device (otherwise it is cleared when you close the tab)</label>
+      <p class="hint">The key is sent only to api.anthropic.com. It is never part of this repository.</p>
+    </div>
+    <div id="proxyBox" hidden>
+      <label>Proxy URL
+        <input id="proxyUrl" type="url" placeholder="https://claude-proxy.YOURNAME.workers.dev">
+      </label>
+    </div>
+    <label>System prompt
+      <textarea id="systemPrompt" rows="3" placeholder="Optional. e.g. You are a helpful assistant. Reply in the user's language."></textarea>
+    </label>
+    <label>Max output tokens
+      <input id="maxTokens" type="number" min="256" max="64000" step="256">
+    </label>
+    <div class="actions">
+      <button id="clearAll" type="button" class="danger">Delete all chats</button>
+      <button value="close" class="primary">Done</button>
+    </div>
+  </form>
+</dialog>
+<script type="module" src="app.js"></script>
+</body>
+</html>

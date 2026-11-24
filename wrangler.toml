@@ -1,0 +1,7 @@
+name = "claude-proxy"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+# Change to your GitHub Pages origin (no trailing slash, no path)
+ALLOWED_ORIGIN = "https://rozzaabdalrahman1.github.io"
